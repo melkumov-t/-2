@@ -15,99 +15,96 @@
 
 ## Частина A. Збір експериментальних даних
 
-### A.1. Формування запиту вручну
-
-**Команда:**
-$d = "w3.org"
-$c = New-Object System.Net.Sockets.TcpClient($d, 80)
-$s = $c.GetStream()
-$w = New-Object System.IO.StreamWriter($s)
-$w.Write("GET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n")
-$w.Flush()
-(New-Object System.IO.StreamReader($s)).ReadToEnd()
-$c.Close()
-
+# A.1. Формування запиту вручну
+     
+     
+   **Команда:**
+    
+       $d = "w3.org"
+       >> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+       >> $s = $c.GetStream()
+       >> $w = New-Object System.IO.StreamWriter($s)
+       >> $w.Write("GET / HTTP/1.1`r`nHost: $d`r`nConnection: close`r`n`r`n")
+       >> $w.Flush()
+       >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+       >> $c.Close()
+       
+       
+   **Вивід:**
+      
+     
+      HTTP/1.1 301 Moved Permanently
+      Date: Tue, 24 Nov 2026 16:34:46 GMT
+      Content-Type: text/html; charset=UTF-8
+      Transfer-Encoding: chunked
+      Connection: close
+      Location: https://www.w3.org/
+      set-cookie: __cf_bm=7h4SMM7ZAyedtWFdAkXznjnc0f7RGbfzxd8jzcwzaS8-1795538086.5160668-1.0.1.1-S75mkwx6tC6DcAWo4rqjiAu2qQdBCQWNJbPb4yFLLjbKh0xQQhiDlJs_u_eHsDIt5pQds9TPd3.jgZztolFfe4kk1mJKEbPXSkFAn8ZCxESyxgdLSMYkhGxVFpOXzUnQ; HttpOnly; Path=/; Domain=w3.org; Expires=Tue, 24 Nov 2026 17:04:46 GMT
+      X-Content-Type-Options: nosniff
+      Server: cloudflare
+      CF-RAY: a5f9d2b0be982761-WAW
+      alt-svc: h3=":443"; ma=86400
 ```
-
-**Вивід:**
-
-```
-HTTP/1.1 301 Moved Permanently
-Date: Tue, 24 Nov 2026 16:34:46 GMT
-Content-Type: text/html; charset=UTF-8
-Transfer-Encoding: chunked
-Connection: close
-Location: https://www.w3.org/
-set-cookie: __cf_bm=7h4SMM7ZAyedtWFdAkXznjnc0f7RGbfzxd8jzcwzaS8-1795538086.5160668-1.0.1.1-S75mkwx6tC6DcAWo4rqjiAu2qQdBCQWNJbPb4yFLLjbKh0xQQhiDlJs_u_eHsDIt5pQds9TPd3.jgZztolFfe4kk1mJKEbPXSkFAn8ZCxESyxgdLSMYkhGxVFpOXzUnQ; HttpOnly; Path=/; Domain=w3.org; Expires=Tue, 24 Nov 2026 17:04:46 GMT
-X-Content-Type-Options: nosniff
-Server: cloudflare
-CF-RAY: a5f9d2b0be982761-WAW
-alt-svc: h3=":443"; ma=86400
-
 ### A.2. Запит без поля Host у версії 1.1
 
-**Команда:**
- $c = "w3.org"
->> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
->> $s = $c.GetStream()
->> $w = New-Object System.IO.StreamWriter($s)
->> $w.Write("GET / HTTP/1.1`r`nConnection: close`r`n`r`n")
->> $w.Flush()
->> (New-Object System.IO.StreamReader($s)).ReadToEnd()
->> $c.Close()
-```
-
-**Вивід:**
-
-```
-HTTP/1.1 400 Bad Request
-Server: cloudflare
-Date: Tue, 24 Nov 2026 16:39:43 GMT
-Content-Type: text/html
-Content-Length: 155
-Connection: close
-CF-RAY: -
-
-<html>
-<head><title>400 Bad Request</title></head>
-<body>
-<center><h1>400 Bad Request</h1></center>
-<hr><center>cloudflare</center>
-</body>
-</html>
-
-### A.3. Вплив поля Host на відповідь сервера
-# A.3.1. Чуже доменне ім'я в полі Host
-
-**Команда:**
-$c = "w3.org"
->> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
->> $s = $c.GetStream()
->> $w = New-Object System.IO.StreamWriter($s)
->> $w.Write("GET / HTTP/1.1`r`nHost: iana.org`r`nConnection: close`r`n`r`n")
->> $w.Flush()
->> (New-Object System.IO.StreamReader($s)).ReadToEnd()
->> $c.Close()
->>
->> ```
-
-**Вивід:**
-
-```
-HTTP/1.1 530 <none>
-Date: Tue, 24 Nov 2026 16:42:16 GMT
-Content-Type: text/plain; charset=UTF-8
-Content-Length: 17
-Connection: close
-Cache-Control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0
-Expires: Thu, 01 Jan 1970 00:00:01 GMT
-Referrer-Policy: same-origin
-X-Frame-Options: SAMEORIGIN
-Server: cloudflare
-CF-RAY: a5f9ddaf4d9df9da-WAW
-alt-svc: h3=":443"; ma=86400
-
-error code: 1016
+   **Команда:**
+      $c = "w3.org"
+     >> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+     >> $s = $c.GetStream()
+     >> $w = New-Object System.IO.StreamWriter($s)
+     >> $w.Write("GET / HTTP/1.1`r`nConnection: close`r`n`r`n")
+     >> $w.Flush()
+     >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+     >> $c.Close()
+     
+    **Вивід:**
+     HTTP/1.1 400 Bad Request
+     Server: cloudflare
+     Date: Tue, 24 Nov 2026 16:39:43 GMT
+     Content-Type: text/html
+     Content-Length: 155
+     Connection: close
+     CF-RAY: -
+     
+     <html>
+     <head><title>400 Bad Request</title></head>
+     <body>
+     <center><h1>400 Bad Request</h1></center>
+     <hr><center>cloudflare</center>
+     </body>
+     </html>
+     
+ ### A.3. Вплив поля Host на відповідь сервера
+  # A.3.1. Чуже доменне ім'я в полі Host
+   
+   **Команда:**
+    $c = "w3.org"
+    >> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
+    >> $s = $c.GetStream()
+    >> $w = New-Object System.IO.StreamWriter($s)
+    >> $w.Write("GET / HTTP/1.1`r`nHost: iana.org`r`nConnection: close`r`n`r`n")
+    >> $w.Flush()
+    >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
+    >> $c.Close()
+    >>
+   
+    **Вивід:**
+    
+ 
+    HTTP/1.1 530 <none>
+    Date: Tue, 24 Nov 2026 16:42:16 GMT
+    Content-Type: text/plain; charset=UTF-8
+    Content-Length: 17
+    Connection: close
+    Cache-Control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+    Expires: Thu, 01 Jan 1970 00:00:01 GMT
+    Referrer-Policy: same-origin
+    X-Frame-Options: SAMEORIGIN
+    Server: cloudflare
+    CF-RAY: a5f9ddaf4d9df9da-WAW
+    alt-svc: h3=":443"; ma=86400
+    
+    error code: 1016
 
 # A.3.2. Неіснуюче ім'я в полі Host
 
@@ -121,11 +118,8 @@ $c = "w3.org"
 >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
 >> $c.Close()
 
-```
-
 **Вивід:**
 
-```
 HTTP/1.1 409 Conflict
 Date: Tue, 24 Nov 2026 16:45:44 GMT
 Content-Type: text/plain; charset=UTF-8
@@ -140,8 +134,7 @@ CF-RAY: a5f9e2c16a573560-WAW
 
 error code: 1001
 
-# A.3.3. Запит без поля Host у версії 1.0
-
+### A.3.3. Запит без поля Host у версії 1.0
 **Команда:**
  $c = "w3.org"
 >> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
@@ -151,13 +144,10 @@ error code: 1001
 >> $w.Flush()
 >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
 >> $c.Close()
-
-```
-
+>> 
 **Вивід:**
 
-```
-HTTP/1.1 403 Forbidden
+###HTTP/1.1 403 Forbidden
 Date: Tue, 24 Nov 2026 16:48:21 GMT
 Content-Length: 57
 Connection: close
@@ -167,7 +157,6 @@ Expires: Thu, 01 Jan 1970 00:00:01 GMT
 CF-RAY: a5f9e697eb34eeb9-WAW
 
 ### A.4. Два запити в одному з'єднанні
-
 **Команда:**
 $c = "w3.org"
 >> $c = New-Object System.Net.Sockets.TcpClient($d, 80)
@@ -178,11 +167,9 @@ $c = "w3.org"
 >> (New-Object System.IO.StreamReader($s)).ReadToEnd()
 >> $c.Close()
 
-```
-
 **Вивід:**
 
-```
+
 HTTP/1.1 301 Moved Permanently
 Date: Tue, 24 Nov 2026 16:53:22 GMT
 Content-Type: text/html; charset=UTF-8
@@ -230,15 +217,10 @@ a7
 0
 
 ### A.5. Запит за допомогою клієнтської програми
-
 **Команда:**
 curl.exe -v --http1.1 http://w3.org/ -o NUL
 
-```
-
 **Вивід:**
-
-```
 * Host w3.org:80 was resolved.
 * IPv6: (none)
 * IPv4: 104.18.23.19, 104.18.22.19
@@ -269,6 +251,7 @@ curl.exe -v --http1.1 http://w3.org/ -o NUL
 100    167   0    167   0      0   1321      0                              0
 * Connection #0 to host w3.org:80 left intact
 
+
 ### A.6. Додаткови дії при отриманні коду стану класу 3xx
 Виконується на iana.org
 
@@ -283,11 +266,7 @@ curl.exe -v --http1.1 http://w3.org/ -o NUL
 >> (New-Object System.IO.StreamReader($ssl)).ReadToEnd()
 >> $c.Close()
 
-```
-
 **Вивід:**
-
-```
 HTTP/1.1 301 Moved Permanently
 Date: Tue, 24 Nov 2026 17:06:25 GMT
 Server: Apache
