@@ -287,3 +287,9 @@ Content-Type: text/html; charset=iso-8859-1
 ### Частина B. Розбір полів заголовка
 | **№** | **№**|**Поле заголовка**|**Значення**|**Призначення (власне формулювання)**|**Походження: сервер / проміжний вузол / не визначено**|**Обґрунтування**|
 |---|---|---|---|
+
+| **№** | **Поле заголовка** | **Значення** | **Призначення (власне формулювання)** |**Походження: сервер / проміжний вузол / не визначено**|**Обґрунтування** |
+|---|---|---|---|
+| 1 | Запит з діагностикою | &lt;* Request completely sent off * schannel: remote party requests renegotiation * schannel: renegotiating SSL/TLS connection * schannel: SSL/TLS connection renegotiated HTTP/1.1 301 Moved Permanently Date: Sun, 22 Nov 2026 13:49:27 GMT Content-Type: text/html; charset=UTF-8 Transfer-Encoding: chunked < Connection: keep-alive | Пошук домена з діагностикою його вмісту для подальшого використання або діагностики вмісту, для подальших дій. |
+| 2 | Доменні імена | >Type   TTL   Section    IPAddress w3.org AAAA   600   Answer     2606:4700::6812:1713 w3.org AAAA   600   Answer     2606:4700::6812:1613 w3.org A      600   Answer     104.18.23.19 w3.org  A      600   Answer     104.18.22.19dig w3.org |Вивід доменних імен з їх TTL та наглядне зображення їх відмінності після різного проміжку часу запиту. |
+| 3 | Запит без захисту  | * Host neverssl.com:80 was resolved.* IPv6: (none) * IPv4: 34.223.124.45 *Trying 34.223.124.45:80... * connect to 34.223.124.45 port 80 from 0.0.0.0 port 58018 failed: Timed out * Failed to connect to neverssl.com:80 after 21162 ms: Could not connect to server * closing connection #0 curl: (28) Failed to connect to neverssl.com:80 after 21162 ms: Could not connect to server| Без захисту не вдалося підключитися до neverssl.com, що каже нам про захищення HTTPS |
